@@ -3,8 +3,7 @@ rootProject.name = 'versioning-demo'
 
 include 'service-foo', 'service-bar'
 
-/ * don't pay attention to this part just yet */
-def includeInfra = false
+def includeInfra = true
 
 if (isNotJenkinsBuild() && includeInfra) {
     includeBuild('./infrastructure')
