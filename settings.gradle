@@ -2,6 +2,31 @@
 rootProject.name = 'versioning-demo'
 
 include 'service-foo', 'service-bar'
+def includedBuildModules = ["rest", "string-utils"]
+
+def includedModulesPropertiesFiles = []
+for (includedModule in includedBuildModules) {
+    def compositeEnableFile = file("./infrastructure/$includedModule/.composite-enable.properties")
+    if (compositeEnableFile.exists()) {
+        includedModulesPropertiesFiles.add(compositeEnableFile)
+    }
+}
+
+if (isNotJenkinsBuild() && includedModulesPropertiesFiles.size() > 0) {
+    includeBuild('./infrastructure') {
+        dependencySubstitution { DependencySubstitutions substitutions ->
+            includedModulesPropertiesFiles.forEach { File propsFile ->
+                Properties properties = new Properties()
+                propsFile.withInputStream {
+                    properties.load(it)
+                }
+                def moduleName = properties.gav
+                def targetProject = properties.target
+                substitute module("$moduleName") using project(":$targetProject")
+            }
+        }
+    }
+}
 
 private static boolean isNotJenkinsBuild() {
     def jenkinsHome = System.getenv('JENKINS_HOME')

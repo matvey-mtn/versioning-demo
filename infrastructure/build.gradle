@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-subprojects {
+subprojects { subproject ->
 
     repositories {
         jcenter()
@@ -26,6 +26,35 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
+    String camelCaseName = moduleNameToCamelCase(subproject.name)
+
+    task ("enable${camelCaseName}CompositeBuild") {
+        group = 'Tools'
+        description = "Enable composite build for ${subproject.name}"
+        doLast {
+            def compositeEnableFile = new File("${parent.getProjectDir().path}/${subproject.name}/.composite-enable.properties")
+            println(compositeEnableFile.path)
+            compositeEnableFile.createNewFile()
+            /* group:artifact:version */
+            String moduleGAV = "gav=${subproject.group}:${subproject.name}:${subproject.version}"
+            String target = "target=${subproject.name}"
+            compositeEnableFile.write moduleGAV
+            compositeEnableFile.append "\n"
+            compositeEnableFile.append target
+        }
+    }
+
+    task ("disable${camelCaseName}CompositeBuild") {
+        group = 'Tools'
+        description = "Disable composite build for ${subproject.name}"
+        doLast {
+            File file = file("${parent.getProjectDir().path}/${subproject.name}/.composite-enable.properties")
+            if (file.exists()) {
+                file.delete()
+            }
+        }
+    }
+
     dependencies {
         /* kotlin */
         implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -38,4 +67,13 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+}
+
+private static String moduleNameToCamelCase(subprojectName) {
+    def split = subprojectName.toString().split("-")
+    def camelCaseName = "";
+    for (s in split) {
+        camelCaseName += s.capitalize()
+    }
+    camelCaseName
 }

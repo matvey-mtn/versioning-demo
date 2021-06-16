@@ -17,6 +17,7 @@
 hs_err_pid*
 
 # Gradle
+.composite-enable.properties
 .gradle
 build/
 
