@@ -1,5 +1,6 @@
-# versioning-demo
-Showcasing infrastructure versioning with composite builds
+# versioning-demo [OLD VERSION] 
+
+## [Updated version](https://github.com/matvey-mtn/versioning-demo/tree/base2-v1-single-build) 
 
 ### Before Composite Builds
 
