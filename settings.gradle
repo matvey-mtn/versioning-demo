@@ -9,6 +9,7 @@ if (isNotJenkinsBuild() && includeInfra) {
     includeBuild('./infrastructure') {
         dependencySubstitution {
             substitute module("io.logz.example:no-ops") using project(":no-ops") because('stub to disable default substitution')
+            substitute module("io.logz.example.infrastructure:string-utils") using project(':string-utils')
         }
     }
 }
