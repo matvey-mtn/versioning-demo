@@ -5,7 +5,7 @@ include 'service-foo', 'service-bar'
 
 def includeInfra = true
 
-def substitutions = [:]
+def substitutions = [ 'io.logz.example.infrastructure:rest:1.0.1-RC': ':rest' ]
 
 if (isNotJenkinsBuild() && includeInfra) {
     includeBuild('./infrastructure') {
