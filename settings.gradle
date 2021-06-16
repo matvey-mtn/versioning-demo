@@ -3,15 +3,6 @@ rootProject.name = 'versioning-demo'
 
 include 'service-foo', 'service-bar'
 
-if (isNotJenkinsBuild()) {
-    includeBuild('./infrastructure') {
-        dependencySubstitution {
-            substitute module("io.logz.example.infrastructure:rest:1.0.1-RC") using project(":rest") because('building with current sources version locally')
-        }
-    }
-}
-
-
 private static boolean isNotJenkinsBuild() {
     def jenkinsHome = System.getenv('JENKINS_HOME')
     return jenkinsHome == null || jenkinsHome.isEmpty()
