@@ -1,0 +1,11 @@
+group 'io.logz.example.service'
+version '1.0.0'
+
+dependencies {
+    /* ktor */
+    implementation "io.ktor:ktor-server-core:1.6.0"
+
+    /* infra */
+    implementation 'io.logz.example.infrastructure:string-utils:1.0.1'
+    implementation 'io.logz.example.infrastructure:rest:1.0.1-RC'
+}

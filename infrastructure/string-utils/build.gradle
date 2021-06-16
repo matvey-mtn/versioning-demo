@@ -1,0 +1,26 @@
+version '1.0.1'
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.4'
+}
+
+java {
+    withSourcesJar()
+}
+
+/* publishing configuration */
+publishing {
+    publications {
+        stringUtils(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'buildDirRepo'
+            url = "file://${buildDir}/local-maven-repo"
+        }
+    }
+}
+
