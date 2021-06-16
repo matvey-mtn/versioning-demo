@@ -14,6 +14,12 @@ fun Route.defaultRoutes(serviceName: String) {
             call.respondText("Status: $serviceName is Up!")
         }
     }
+
+    route("/ready") {
+        get {
+            call.respondText("Status: $serviceName is Ready!")
+        }
+    }
 }
 
 fun Application.registerDefaultRoutes(serviceName: String) {
