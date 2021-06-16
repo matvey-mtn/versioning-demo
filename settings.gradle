@@ -6,12 +6,14 @@ include 'service-foo', 'service-bar'
 def includeInfra = true
 
 if (isNotJenkinsBuild() && includeInfra) {
-    includeBuild('./infrastructure')
+    includeBuild('./infrastructure') {
+        dependencySubstitution {
+            substitute module("io.logz.example:no-ops") using project(":no-ops") because('stub to disable default substitution')
+        }
+    }
 }
 
 private static boolean isNotJenkinsBuild() {
     def jenkinsHome = System.getenv('JENKINS_HOME')
     return jenkinsHome == null || jenkinsHome.isEmpty()
 }
-
-
