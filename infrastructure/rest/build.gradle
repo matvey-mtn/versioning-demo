@@ -1,0 +1,35 @@
+version '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+
+    withSourcesJar()
+}
+
+dependencies {
+    /* ktor */
+    implementation "io.ktor:ktor-server-core:1.6.0"
+    implementation "io.ktor:ktor-server-netty:1.6.0"
+
+    /* logback */
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+}
+
+/* publish configuration */
+publishing {
+    publications {
+        rest(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'buildDirRepo'
+            /* could be nexus, artifactory, etc */
+            url = "file://${buildDir}/local-maven-repo"
+        }
+    }
+}

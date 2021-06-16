@@ -1,0 +1,41 @@
+description 'Infrastructure project - this build is separate from versioning-demo root project'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        /* kotlin plugin dependency */
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+subprojects {
+
+    repositories {
+        jcenter()
+    }
+
+    /* declaring default group and version coordinates */
+    group 'io.logz.example.infrastructure'
+    version '1.0.0'
+
+    /* applying plugins for all subprojects */
+    apply plugin: 'kotlin'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+
+    dependencies {
+        /* kotlin */
+        implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+        /* test */
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

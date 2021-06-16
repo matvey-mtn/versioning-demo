@@ -1,0 +1,27 @@
+version '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+
+    withSourcesJar()
+}
+
+/* publishing configuration */
+publishing {
+    publications {
+        stringUtils(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'buildDirRepo'
+            /* could be nexus, artifactory, etc */
+            url = "file://${buildDir}/local-maven-repo"
+        }
+    }
+}
+

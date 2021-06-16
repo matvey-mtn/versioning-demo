@@ -1,0 +1,66 @@
+group 'org.versioning'
+description = 'Showcasing infrastructure versioning with composed builds'
+
+version '1.0.0'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        /* kotlin plugin dependency */
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+allprojects {
+    repositories {
+        /* get artifacts deployed locally */
+        mavenLocal()
+        jcenter()
+    }
+
+    /* plugins */
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
+
+    /* configuration */
+    project.afterEvaluate {
+        task beforeBuild {
+            doLast {
+                def now = getDate()
+                println 'Starting build for project "' + project.name + '" at ' + now
+            }
+        }
+
+        tasks.named('classes') {
+            it.dependsOn('beforeBuild')
+        }
+
+        project.tasks.named('jar') { archiveTask ->
+            archiveTask.doLast {
+                println 'Build SUCCESSFULL for module: ' + project.name + ' version: ' + version
+            }
+        }
+    }
+
+    dependencies {
+        /* kotlin */
+        implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+        /* test */
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+static def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd-HH:mm:ss')
+    return formattedDate
+}

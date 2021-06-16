@@ -1,0 +1,18 @@
+/* parent project */
+rootProject.name = 'versioning-demo'
+
+include 'service-foo', 'service-bar'
+
+/ * don't pay attention to this part just yet */
+def includeInfra = false
+
+if (isNotJenkinsBuild() && includeInfra) {
+    includeBuild('./infrastructure')
+}
+
+private static boolean isNotJenkinsBuild() {
+    def jenkinsHome = System.getenv('JENKINS_HOME')
+    return jenkinsHome == null || jenkinsHome.isEmpty()
+}
+
+
