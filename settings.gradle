@@ -5,10 +5,18 @@ include 'service-foo', 'service-bar'
 
 def includeInfra = true
 
+def substitutions = [:]
+
 if (isNotJenkinsBuild() && includeInfra) {
     includeBuild('./infrastructure') {
         dependencySubstitution {
             substitute module("io.logz.example:no-ops") using project(":no-ops") because('stub to disable default substitution')
+
+            substitutions.entrySet().forEach {
+                def moduleName = it.key
+                def targetProject = it.value
+                substitute module("$moduleName") using project("$targetProject")
+            }
         }
     }
 }
