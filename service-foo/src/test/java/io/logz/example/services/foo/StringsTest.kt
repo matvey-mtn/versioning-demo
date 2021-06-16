@@ -8,6 +8,6 @@ class StringsTest {
 
     @Test
     fun `concat foo and bar`() {
-        Assertions.assertEquals("foo bar", Strings.concat("foo", "bar"))
+        Assertions.assertEquals("foo bar", Strings.concat("foo  ", "bar "))
     }
 }
