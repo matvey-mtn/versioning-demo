@@ -19,6 +19,6 @@ class KtorRestServer(
     }
 
     fun stop() {
-        embeddedServer.stop(5000, 10000)
+        embeddedServer.stop(5000, 5000)
     }
 }

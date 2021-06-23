@@ -28,11 +28,11 @@ subprojects {
 
     dependencies {
         /* kotlin */
-        implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
         /* test */
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     }
 
     test {

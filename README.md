@@ -1,31 +1,21 @@
-# versioning-demo [OLD VERSION] 
+# versioning-demo
+Showcasing infrastructure versioning with composite builds
 
-## [Updated version](https://github.com/matvey-mtn/versioning-demo/tree/base2-v1-single-build) 
+### Versioned Builds
 
-### Before Composite Builds
+The code in this branch is a simple project with 2 services `service-foo` and `service-bar`.
 
-The `master` branch is a simple project with 2 services `service-foo` and `service-bar`.
-
-Both services depend on `infrastructure` modules which are not part of this build.
-The `infrastructure` directory is not included in root project build.
-To compile project at this point you need to run ` ./gradlew --include-build ./infrastructure build`
-
-An alternative option would be to run `cd ./infrastructure && ./gradlew publishToMavenLocal` before build `service-foo` and `service-bar` 
+Both services depend on the artifacts created by `infrastructure` modules.
+To compile project you need to run `./gradlew :infrastructure publishToMavenLocal` 
+and only then `./gradlew build`
 
 ### Demo
 
-1. [Include Infrastructure Build V2](https://github.com/matvey-mtn/versioning-demo/compare/3eca69fa17fc5aa3e6a4953d43ccec4b3781d941...v2-include-build)
 
-1. [Disable Default Substitution V3](https://github.com/matvey-mtn/versioning-demo/compare/v2-include-build...v3-disable-substitution)
+1. [Use composite build to test a new version of rest lib - V2](https://github.com/matvey-mtn/versioning-demo/compare/410c36ee6c7f15a21248e23585f0d4f8fe54e94e..base2-v2-update-rest-lib-using-composite-build)
 
-1. [Change tests & Find the bug V4](https://github.com/matvey-mtn/versioning-demo/compare/v3-disable-substitution...v4-change-tests)
-   
-1. [Fix string-utils library V5](https://github.com/matvey-mtn/versioning-demo/compare/v4-change-tests..v5-fix-string-utils)
+1. [Release rest:1.0.1 and update all services - V3](https://github.com/matvey-mtn/versioning-demo/compare/base2-v2-update-rest-lib-using-composite-build..base2-v3-release-rest-lib-and-replace-everywhere)
 
-1. [Bump string-utils version V6](https://github.com/matvey-mtn/versioning-demo/compare/v5-fix-string-utils..v6-replace-string-utils-version)
+1. [Use dynamic config for composite builds - V4](https://github.com/matvey-mtn/versioning-demo/compare/base2-v3-release-rest-lib-and-replace-everywhere..base2-v4-dynamic-composite-build-config)
 
-1. [Configure Dynamic Substitution V7](https://github.com/matvey-mtn/versioning-demo/compare/v6-replace-string-utils-version..v7-dynamic-substitution)
-
-1. [Create new rest library version V8](https://github.com/matvey-mtn/versioning-demo/compare/v7-dynamic-substitution..v8-release-new-rest-library-version)
-
-1. [Release new rest library version & bump everywhere V9](https://github.com/matvey-mtn/versioning-demo/compare/v8-release-new-rest-library-version..v9-replace-rest-lib-version)
+Link to [Old Version](https://github.com/matvey-mtn/versioning-demo)
